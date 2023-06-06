@@ -1,11 +1,11 @@
-import TodoModal from '../models/todo.js';
+const TodoModal = require('../models/todo.js');
 
-export const getTodoList = async (req, res) => {
+const getTodoList = async (req, res) => {
   const todoList = await TodoModal.findAll({ order: [['updatedAt', 'DESC']] });
   res.status(200).json(todoList);
 };
 
-export const createTodoTask = async (req, res) => {
+const createTodoTask = async (req, res) => {
   const data = req.body;
   try {
     const todo = await TodoModal.create({
@@ -20,7 +20,7 @@ export const createTodoTask = async (req, res) => {
   }
 };
 
-export const updateTodoTask = async (req, res) => {
+const updateTodoTask = async (req, res) => {
   const id = req.params.id;
   const data = req.body;
   try {
@@ -36,7 +36,7 @@ export const updateTodoTask = async (req, res) => {
   }
 };
 
-export const deleteTodoTask = async (req, res) => {
+const deleteTodoTask = async (req, res) => {
   const id = req.params.id;
   try {
     const todo = await TodoModal.destroy({
@@ -49,4 +49,11 @@ export const deleteTodoTask = async (req, res) => {
     console.error('Error deleting todo:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+};
+
+module.exports = {
+  getTodoList,
+  createTodoTask,
+  updateTodoTask,
+  deleteTodoTask,
 };

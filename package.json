@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "server": "nodemon backend/server",
@@ -24,6 +23,7 @@
   },
   "devDependencies": {
     "concurrently": "^8.0.1",
-    "nodemon": "^2.0.22"
+    "nodemon": "^2.0.22",
+    "sequelize-cli": "^6.6.0"
   }
 }

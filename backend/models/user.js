@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = (sequelize, DataTypes) => {
-  const Todo = sequelize.define(
-    'Todo',
+  const User = sequelize.define(
+    'User',
     {
       id: {
         type: DataTypes.UUID,
@@ -10,29 +10,37 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         primaryKey: true,
       },
-      title: {
+      firstName: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      description: {
+      lastName: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      status: {
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      isVerify: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
       },
     },
     {
-      modelName: 'Todo',
+      modelName: 'User',
       freezeTableName: true,
     },
   );
 
-  Todo.associate = (models) => {
-    // define association here
+  User.associate = function (models) {
+    User.hasMany(models.Todo, { foreignKey: 'userId', onDelete: 'CASCADE' });
   };
 
-  return Todo;
+  return User;
 };
