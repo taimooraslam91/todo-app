@@ -1,30 +1,31 @@
-import TodoModal from '../models/todo.js';
+const { Todo } = require('../models');
 
-export const getTodoList = async (req, res) => {
-  const todoList = await TodoModal.findAll({ order: [['updatedAt', 'DESC']] });
+const getTodoList = async (req, res) => {
+  const todoList = await Todo.findAll({ order: [['updatedAt', 'DESC']] });
   res.status(200).json(todoList);
 };
 
-export const createTodoTask = async (req, res) => {
+const createTodoTask = async (req, res) => {
   const data = req.body;
   try {
-    const todo = await TodoModal.create({
+    const todo = await Todo.create({
       title: data.title,
       description: data.description,
       status: data.status,
+      userId: data.userId,
     });
-    res.status(200).json(todo);
+    res.status(201).json(todo);
   } catch (error) {
     console.error('Error creating todo:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
 
-export const updateTodoTask = async (req, res) => {
+const updateTodoTask = async (req, res) => {
   const id = req.params.id;
   const data = req.body;
   try {
-    const todo = await TodoModal.update(data, {
+    const todo = await Todo.update(data, {
       where: {
         id: id,
       },
@@ -36,10 +37,10 @@ export const updateTodoTask = async (req, res) => {
   }
 };
 
-export const deleteTodoTask = async (req, res) => {
+const deleteTodoTask = async (req, res) => {
   const id = req.params.id;
   try {
-    const todo = await TodoModal.destroy({
+    const todo = await Todo.destroy({
       where: {
         id: id,
       },
@@ -49,4 +50,11 @@ export const deleteTodoTask = async (req, res) => {
     console.error('Error deleting todo:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
+};
+
+module.exports = {
+  getTodoList,
+  createTodoTask,
+  updateTodoTask,
+  deleteTodoTask,
 };

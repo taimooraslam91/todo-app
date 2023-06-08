@@ -1,10 +1,10 @@
-import express from 'express';
-import {
+const express = require('express');
+const {
   getTodoList,
   createTodoTask,
   updateTodoTask,
   deleteTodoTask,
-} from '../controllers/todo.js';
+} = require('../controllers/todo.js');
 const router = express.Router();
 
 // @desc   Fetch all todo
@@ -27,4 +27,4 @@ router.put('/:id', updateTodoTask);
 // @access Public
 router.delete('/:id', deleteTodoTask);
 
-export default router;
+module.exports = router;

@@ -1,17 +1,14 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import bodyParser from 'body-parser';
-import { testConnection } from './config/db.js';
-import { dropTables, createTables } from './models/index.js';
+const express = require('express');
+const dotenv = require('dotenv');
+const cors = require('cors');
+const bodyParser = require('body-parser');
 
 // Router
-import TodoRouter from './routes/todo.js';
+const TodoRouter = require('./routes/todo.js');
+const userRouter = require('./routes/user');
 
 const app = express();
 dotenv.config();
-testConnection();
-// createTables();
 
 const PORT = process.env.PORT;
 
@@ -25,6 +22,7 @@ app.get('/api', (req, res) => {
 });
 
 app.use('/api/todo', TodoRouter);
+app.use('/api/user', userRouter);
 
 app.listen(PORT, () => {
   console.log(`TODO app backend listening on port ${PORT}`);
