@@ -1,18 +1,23 @@
-import { Sequelize } from 'sequelize';
-import dotenv from 'dotenv';
+const Sequelize = require('sequelize');
+const dotenv = require('dotenv');
 dotenv.config();
 
 const sequelize = new Sequelize(process.env.POSTGRES_URL, {
-  logging: (...msg) => console.log(msg), // Displays all log function call parameters
+  logging: function (...msg) {
+    console.log(msg);
+  }, // Displays all log function call parameters
 });
 
-export async function testConnection() {
-  try {
-    await sequelize.authenticate();
-    console.log('Connection has been established successfully.');
-  } catch (error) {
-    console.error('Unable to connect to the database:', error);
-  }
+function testConnection() {
+  sequelize
+    .authenticate()
+    .then(function () {
+      console.log('Connection has been established successfully.');
+    })
+    .catch(function (error) {
+      console.error('Unable to connect to the database:', error);
+    });
 }
 
-export default sequelize;
+module.exports = sequelize;
+module.exports.testConnection = testConnection;
